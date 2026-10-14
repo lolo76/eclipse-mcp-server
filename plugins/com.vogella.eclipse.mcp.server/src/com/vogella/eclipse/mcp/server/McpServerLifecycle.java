@@ -52,7 +52,8 @@ public final class McpServerLifecycle {
 					service.stop();
 					return Status.OK_STATUS;
 				}
-				if (service.isRunning() && service.getPort() == port) {
+				if (service.isRunning() && service.getPort() == port
+						&& service.getDisabledTools().equals(McpPreferences.getDisabledTools())) {
 					return Status.OK_STATUS;
 				}
 				service.stop();
