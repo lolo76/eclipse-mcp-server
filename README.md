@@ -59,7 +59,8 @@ Set `disabledTools` in the server's preference node to a list of names or globs 
 com.vogella.eclipse.mcp.server/disabledTools=eclipse_debug_*, eclipse_*_flight_recording, eclipse_*_sampling
 ```
 
-In a running IDE, write the preference with `eclipse_set_preference` or in the workspace's `.metadata/.plugins/org.eclipse.core.runtime/.settings/com.vogella.eclipse.mcp.server.prefs`, then switch the server off and on again on the preference page.
+In a running IDE, write the preference with `eclipse_set_preference`, or type it into the *Disabled tools* field of the preference page.
+The server restarts on its own when the value changes and the server is enabled.
 
 ### In an RCP application
 

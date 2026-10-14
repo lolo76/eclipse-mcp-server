@@ -16,6 +16,7 @@ import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
+import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -87,6 +88,7 @@ public class McpPreferencePage extends FieldEditorPreferencePage implements IWor
 		defaults.putInt(McpPreferences.KEY_PORT, McpPreferences.DEFAULT_PORT);
 		defaults.putInt(McpPreferences.KEY_CALL_TIMEOUT_SECONDS, McpPreferences.DEFAULT_CALL_TIMEOUT_SECONDS);
 		defaults.putInt(McpPreferences.KEY_UI_WAIT_SECONDS, McpPreferences.DEFAULT_UI_WAIT_SECONDS);
+		defaults.put(McpPreferences.KEY_DISABLED_TOOLS, "");
 		serverPreferences = new ScopedPreferenceStore(InstanceScope.INSTANCE, McpPreferences.QUALIFIER);
 		return serverPreferences;
 	}
@@ -107,6 +109,12 @@ public class McpPreferencePage extends FieldEditorPreferencePage implements IWor
 		uiWait.getLabelControl(getFieldEditorParent()).setToolTipText(
 				"How long a tool waits for a busy UI thread before it withdraws the request. Capped by the tool call timeout.");
 		addField(uiWait);
+		StringFieldEditor disabledTools = new StringFieldEditor(McpPreferences.KEY_DISABLED_TOOLS, "&Disabled tools:",
+				getFieldEditorParent());
+		disabledTools.setEmptyStringAllowed(true);
+		disabledTools.getLabelControl(getFieldEditorParent()).setToolTipText(
+				"Tools the server does not offer, as names or globs separated by commas or spaces, for example eclipse_debug_*, eclipse_*_sampling. Every tool a client lists costs it context.");
+		addField(disabledTools);
 	}
 
 	@Override

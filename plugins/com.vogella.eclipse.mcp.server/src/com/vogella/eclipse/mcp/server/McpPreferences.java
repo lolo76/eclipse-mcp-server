@@ -50,6 +50,11 @@ public final class McpPreferences {
 		return Platform.getPreferencesService().getBoolean(QUALIFIER, KEY_ENABLED, DEFAULT_ENABLED, null);
 	}
 
+	/** The raw {@code disabledTools} value, which is empty when nothing is left out. */
+	public static String getDisabledTools() {
+		return Platform.getPreferencesService().getString(QUALIFIER, KEY_DISABLED_TOOLS, "", null); //$NON-NLS-1$
+	}
+
 	public static int getPort() {
 		return Platform.getPreferencesService().getInt(QUALIFIER, KEY_PORT, DEFAULT_PORT, null);
 	}

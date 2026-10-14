@@ -78,6 +78,9 @@ public final class McpServerService {
 
 	private int runningPort = -1;
 
+	/** The {@code disabledTools} value the running server was built with, to tell when a restart is due. */
+	private String runningDisabledTools = ""; //$NON-NLS-1$
+
 	private String lastError;
 	private boolean lastErrorIsPort;
 
@@ -95,6 +98,11 @@ public final class McpServerService {
 	/** The port the server is listening on, or {@code -1} while it is stopped. */
 	public synchronized int getPort() {
 		return runningPort;
+	}
+
+	/** The {@code disabledTools} value the running server was started with. */
+	public synchronized String getDisabledTools() {
+		return runningDisabledTools;
 	}
 
 	/** The endpoint clients have to talk to, or {@code null} while the server is stopped. */
@@ -203,6 +211,8 @@ public final class McpServerService {
 		// that a client reconnecting after a restart waits in the ready gate instead of being refused
 		List<SyncToolSpecification> specifications;
 		try {
+			runningDisabledTools = McpPreferences.getDisabledTools();
+			McpToolRegistry.getInstance().reset();
 			specifications = McpToolRegistry.getInstance().getTools().stream()
 					.map(tool -> McpToolAdapter.toSpecification(tool, jsonMapper, toolExecutor)).toList();
 			mcpServer = McpServer.sync(transport).serverInfo("eclipse-mcp", version()) //$NON-NLS-1$
