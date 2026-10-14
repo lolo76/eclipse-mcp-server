@@ -15,7 +15,7 @@ import org.eclipse.core.runtime.Platform;
 
 /**
  * The tools contributed through the {@code com.vogella.eclipse.mcp.core.tools} extension
- * point, instantiated on first access.
+ * point, instantiated on first access and minus the ones {@link ToolFilter} disables.
  */
 public final class McpToolRegistry {
 
@@ -80,6 +80,12 @@ public final class McpToolRegistry {
 			} catch (CoreException e) {
 				ILog.get().error("Could not create MCP tool contributed by %s".formatted(contributor), e); //$NON-NLS-1$
 			}
+		}
+		ToolFilter filter = ToolFilter.fromPreferences();
+		int before = discovered.size();
+		discovered.keySet().removeIf(filter::isDisabled);
+		if (discovered.size() < before) {
+			ILog.get().info("%d MCP tools left out by the disabledTools preference".formatted(before - discovered.size())); //$NON-NLS-1$
 		}
 		tools = discovered;
 		return tools;

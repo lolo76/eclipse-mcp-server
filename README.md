@@ -50,6 +50,17 @@ Changes apply immediately.
 The page also shows the URL, the bearer token and the discovery file, and can regenerate the token.
 If the port is taken, the server stays down and the page says why; it never moves to another port behind a client's back.
 
+### Leaving tools out
+
+Every tool a client lists costs it context on every turn.
+Set `disabledTools` in the server's preference node to a list of names or globs separated by commas, spaces or line breaks, and the server does not offer them after its next start:
+
+```
+com.vogella.eclipse.mcp.server/disabledTools=eclipse_debug_*, eclipse_*_flight_recording, eclipse_*_sampling
+```
+
+In a running IDE, write the preference with `eclipse_set_preference` or in the workspace's `.metadata/.plugins/org.eclipse.core.runtime/.settings/com.vogella.eclipse.mcp.server.prefs`, then switch the server off and on again on the preference page.
+
 ### In an RCP application
 
 The server starts through a declarative service, so an RCP application needs `org.apache.felix.scr` and a workspace, but no `org.eclipse.ui.startup`.

@@ -5,6 +5,7 @@ import java.time.Duration;
 import org.eclipse.core.runtime.Platform;
 
 import com.vogella.eclipse.mcp.core.CallBudget;
+import com.vogella.eclipse.mcp.core.ToolFilter;
 
 /**
  * The preferences that control the embedded MCP server.
@@ -22,6 +23,9 @@ public final class McpPreferences {
 
 	/** How long a tool waits for a busy UI thread before withdrawing its request; read by {@code CallBudget.uiWaitSeconds}. */
 	public static final String KEY_UI_WAIT_SECONDS = CallBudget.UI_WAIT_KEY;
+
+	/** Tools to leave out, as names or globs separated by commas, spaces or line breaks; read when the server starts. */
+	public static final String KEY_DISABLED_TOOLS = ToolFilter.DISABLED_TOOLS_KEY;
 
 	/** A process that listens on a socket and answers questions about the user's code must be opt-in. */
 	public static final boolean DEFAULT_ENABLED = false;
